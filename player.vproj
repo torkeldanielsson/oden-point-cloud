@@ -1,0 +1,45 @@
+config : {
+    scene_manager : {
+        next_scene_id : 1;
+        scenes : ( {
+                scene_id : 0;
+                uuid : "f313fb0d-135d-4edd-8cc4-9dd478b36e9a";
+                root_entity : {
+                    uuid : "06e4e90e-310e-4186-b739-da0a778475e7";
+                    children : ( {
+                            uuid : "54ba8331-2ed7-473d-aba5-f755eea5b425";
+                            position : [ 0.5, 0.2, -1.5 ];
+                            scale : [ 0.1, 0.1, 0.1 ];
+                            type : "remote_streamer";
+                            stream : {
+                                id : 1;
+                                uuid : "d2e8642a-13c5-46dc-802f-076314f24e03";
+                                width : 1280;
+                                height : 720;
+                                capture : {
+                                    impl : "lltp";
+                                };
+                            };
+                            net_settings : {
+                                links : ( {
+                                        uuid : "4d5bf701-c75c-4ab0-8ecb-ca7ba4958219";
+                                        mode : "receiver";
+                                    } );
+                            };
+                        }, {
+                            uuid : "a0433c85-f263-4b87-8466-5cd31d856b1e";
+                            type : "remote_stitched_video";
+                            remote_streamer : "54ba8331-2ed7-473d-aba5-f755eea5b425";
+                            remote_stitched_video : "48458a25-0ea5-4b82-86ad-4d168935a7fb";
+                            children : ( {
+                                    uuid : "8a9ffc31-2b8d-4ec1-969a-5f875ea2de4b";
+                                    type : "plugin_entity";
+                                    type_id : "8c5dfd89-7513-4edb-bd7f-97587e265f79";
+                                    type_name : "Point Cloud Player";
+                                } );
+                        } );
+                };
+            } );
+    };
+    plugin_dll_paths : [ "target/release" ];
+};

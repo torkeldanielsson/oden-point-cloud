@@ -1,0 +1,21 @@
+[package]
+name = "oden-point-cloud"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Streams lidar point clouds from the Oden Streamer to the Player and draws them over the video"
+publish = false
+
+[lib]
+name = "point_cloud"
+crate-type = ["cdylib"]
+
+[dependencies]
+draco-core = { version = "=2.3.2", default-features = false, features = [
+    "encoder",
+    "point_cloud_decode",
+] }
+oden_plugin_rs = { git = "https://github.com/voysys/oden_plugin_rs", tag = "v51.3", features = [
+    "glam_conversion",
+] }
+oden_plugin_rs-derive = { git = "https://github.com/voysys/oden_plugin_rs", tag = "v51.3" }

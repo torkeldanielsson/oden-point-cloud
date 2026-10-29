@@ -1,0 +1,91 @@
+config : {
+    scene_manager : {
+        next_scene_id : 1;
+        scenes : ( {
+                scene_id : 0;
+                uuid : "fae11a62-420a-4633-9a75-fb760f81ee06";
+                root_entity : {
+                    uuid : "03a3feff-c623-4838-b625-c25651c8d34a";
+                    children : ( {
+                            id : "Camera";
+                            uuid : "48458a25-0ea5-4b82-86ad-4d168935a7fb";
+                            type : "panorama_video";
+                            children : ( {
+                                    uuid : "1821dd06-9baa-4fe2-a4f8-8d68cb8765e0";
+                                    type : "plugin_entity";
+                                    type_id : "c24b0e07-5107-4970-9931-21c9c9581df5";
+                                    type_name : "Point Cloud Streamer";
+                                } );
+                            pv : {
+                                camera_rig : {
+                                    views : ( {
+                                            no : 1;
+                                            k : [ 1.416364, -0.09523, 0.912973, -0.850072, 0.794252 ];
+                                            max_theta : 1.0;
+                                        } );
+                                };
+                                streams : ( {
+                                        id : 1;
+                                        uuid : "63ba1085-196b-45aa-ad3a-ff79404ed4f5";
+                                        type : "video";
+                                        width : 1280;
+                                        height : 720;
+                                        capture : {
+                                            impl : "clone";
+                                            clone_stream : "6fcc64bb-9ef7-49c2-98c9-37074dfe3c45";
+                                        };
+                                    } );
+                            };
+                        }, {
+                            uuid : "1092da01-10c8-4a39-91ca-7df2a2b88b3b";
+                            type : "output_alignment";
+                            children : ( {
+                                    uuid : "42b5103c-d7e2-4ff5-91c7-9378158557df";
+                                    type : "panorama_video";
+                                    pv : {
+                                        type : "flat_video_config";
+                                        output_alignment_data : {
+                                            id : 1;
+                                        };
+                                        dewarping_view : {
+                                            k : [ 1.0, 0.0, 0.0, 0.0, 0.0 ];
+                                        };
+                                        streams : ( {
+                                                id : 1;
+                                                uuid : "6fcc64bb-9ef7-49c2-98c9-37074dfe3c45";
+                                                type : "video";
+                                                width : 1280;
+                                                height : 720;
+                                                capture : {
+                                                    impl : "gstreamer";
+                                                    pipeline : "videotestsrc pattern=smpte ! video/x-raw, width=1280, height=720";
+                                                    use_nvdec : false;
+                                                    use_sync : true;
+                                                };
+                                            } );
+                                    };
+                                } );
+                        } );
+                };
+            } );
+    };
+    plugin_dll_paths : [ "target/release" ];
+    stream_settings : {
+        type : "realtime_nvenc_gstreamer";
+        net_settings : {
+            links : ( {
+                    uuid : "b097ba2b-7cbc-4cc9-a35c-c426332e0601";
+                } );
+        };
+        encoder_settings : {
+            use_custom_resolution : true;
+            width : 1280;
+            height : 720;
+            bitrate : 2000000L;
+            intra_refresh : true;
+            codec : "hevc";
+            preset : "low_latency_high_performance";
+            rate_control_mode : "cbr";
+        };
+    };
+};
